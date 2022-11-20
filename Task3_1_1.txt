@@ -1,0 +1,34 @@
+PS C:\DE\docker-hadoop-spark-workbench> docker ps
+CONTAINER ID   IMAGE                                             COMMAND                  CREATED             STATUS                   PORTS                                                      NAMES
+9c608f23ef07   bde2020/spark-worker:2.1.0-hadoop2.8-hive-java8   "entrypoint.sh /bin/…"   About an hour ago   Up 2 minutes (healthy)   0.0.0.0:8081->8081/tcp                                     docker-hadoop-spark-workbench_spark-worker_1
+a8d365d8f222   bde2020/hadoop-datanode:1.1.0-hadoop2.8-java8     "/entrypoint.sh /run…"   About an hour ago   Up 2 minutes (healthy)   0.0.0.0:50075->50075/tcp                                   docker-hadoop-spark-workbench_datanode_1
+1cdaaa8ec03c   bde2020/spark-master:2.1.0-hadoop2.8-hive-java8   "entrypoint.sh /bin/…"   About an hour ago   Up 2 minutes (healthy)   0.0.0.0:7077->7077/tcp, 6066/tcp, 0.0.0.0:8080->8080/tcp   spark-master
+813d5b4ebece   bde2020/hadoop-namenode:1.1.0-hadoop2.8-java8     "/entrypoint.sh /run…"   About an hour ago   Up 2 minutes (healthy)   0.0.0.0:50070->50070/tcp                                   namenode
+91809f4de03e   bde2020/hdfs-filebrowser:3.11                     "/entrypoint.sh buil…"   About an hour ago   Up 2 minutes             0.0.0.0:8088->8088/tcp                                     docker-hadoop-spark-workbench_hue_1
+PS C:\DE\docker-hadoop-spark-workbench> docker cp c:/DE/VM/vmt1.txt a8d365d8f222:/
+PS C:\DE\docker-hadoop-spark-workbench> docker exec -it a8d365d8f222 bash
+root@a8d365d8f222:/# ls
+bin   dev            etc     hadoop-data  lib    media  opt   root  run.sh  srv  tmp  var
+boot  entrypoint.sh  hadoop  home         lib64  mnt    proc  run   sbin    sys  usr  vmt1.txt
+root@a8d365d8f222:/# hdfs dfs -copyFromLocal vmt1.txt /user/cloudera/
+root@a8d365d8f222:/# hdfs dfs -ls /user/cloudera
+Found 1 items
+-rw-r--r--   3 root cloudera     736519 2022-11-20 11:51 /user/cloudera/vmt1.txt
+root@a8d365d8f222:/# exit
+exit
+PS C:\DE\docker-hadoop-spark-workbench> docker cp c:/DE/VM/vmt2.txt a8d365d8f222:/
+PS C:\DE\docker-hadoop-spark-workbench> docker cp c:/DE/VM/vmt3.txt a8d365d8f222:/
+PS C:\DE\docker-hadoop-spark-workbench> docker cp c:/DE/VM/vmt4.txt a8d365d8f222:/
+PS C:\DE\docker-hadoop-spark-workbench> docker exec -it a8d365d8f222 bash
+root@a8d365d8f222:/# ls
+bin   dev            etc     hadoop-data  lib    media  opt   root  run.sh  srv  tmp  var       vmt2.txt  vmt4.txt
+boot  entrypoint.sh  hadoop  home         lib64  mnt    proc  run   sbin    sys  usr  vmt1.txt  vmt3.txt
+root@a8d365d8f222:/# hdfs dfs -copyFromLocal vmt2.txt /user/cloudera/
+root@a8d365d8f222:/# hdfs dfs -copyFromLocal vmt3.txt /user/cloudera/
+root@a8d365d8f222:/# hdfs dfs -copyFromLocal vmt4.txt /user/cloudera/
+root@a8d365d8f222:/# hdfs dfs -ls /user/cloudera
+Found 4 items
+-rw-r--r--   3 root cloudera     736519 2022-11-20 11:51 /user/cloudera/vmt1.txt
+-rw-r--r--   3 root cloudera     770324 2022-11-20 12:33 /user/cloudera/vmt2.txt
+-rw-r--r--   3 root cloudera     843205 2022-11-20 12:34 /user/cloudera/vmt3.txt
+-rw-r--r--   3 root cloudera     697960 2022-11-20 12:34 /user/cloudera/vmt4.txt

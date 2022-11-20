@@ -1,0 +1,22 @@
+root@a8d365d8f222:/# hdfs dfs -chmod 755 /user/cloudera/vmir.har
+root@a8d365d8f222:/# hdfs dfs -ls /user/cloudera
+Found 5 items
+drwxr-xr-x   - root cloudera          0 2022-11-20 13:18 /user/cloudera/vmir.har
+-rw-r--r--   3 root cloudera     736519 2022-11-20 11:51 /user/cloudera/vmt1.txt
+-rw-r--r--   3 root cloudera     770324 2022-11-20 12:33 /user/cloudera/vmt2.txt
+-rw-r--r--   3 root cloudera     843205 2022-11-20 12:34 /user/cloudera/vmt3.txt
+-rw-r--r--   3 root cloudera     697960 2022-11-20 12:34 /user/cloudera/vmt4.txt
+root@a8d365d8f222:/# hdfs dfs -du -s -h /user/cloudera/vmir.har
+2.9 M  8.7 M /user/cloudera/vmir.har
+root@a8d365d8f222:/# hdfs dfs -setrep 2 /user/cloudera/vmir.har
+Replication 2 set: /user/cloudera/vmir.har/_SUCCESS
+Replication 2 set: /user/cloudera/vmir.har/_index
+Replication 2 set: /user/cloudera/vmir.har/_masterindex
+Replication 2 set: /user/cloudera/vmir.har/part-0
+root@a8d365d8f222:/# hdfs dfs -du -s -h /user/cloudera/vmir.har
+2.9 M  5.8 M /user/cloudera/vmir.har
+
+root@a8d365d8f222:/# hdfs dfs -cat /user/cloudera/vmt1.txt | wc -l
+3392
+root@a8d365d8f222:/# hdfs dfs -cat /user/cloudera/vmt2.txt | wc -l
+3294
